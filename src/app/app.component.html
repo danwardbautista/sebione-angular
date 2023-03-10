@@ -4,7 +4,7 @@
     <button type="button" mat-mini-fab (click)="drawer.toggle()" color="secondary" style="box-shadow: none;">
       <mat-icon>menu</mat-icon>
     </button>
-    <span style="padding-left: 15px;">My App</span>
+    <span style="padding-left: 15px;">SEBIONE</span>
     <span class="example-spacer"></span>
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>favorite</mat-icon>
@@ -16,6 +16,8 @@
 
 
   <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
+   <img src="https://sebitechnologies.com/SBT-logo-short-horizontal-colored.png" class="sidenav-logo">
+
     <div class="sidenav-button-container">
       <button routerLink="dashboard" mat-flat-button class="sidenav-button">
         <mat-icon>dashboard</mat-icon>
@@ -24,7 +26,7 @@
     </div>
     <div class="sidenav-button-container">
       <button routerLink="company" mat-flat-button class="sidenav-button">
-        <mat-icon>map</mat-icon>
+        <mat-icon>business</mat-icon>
         Company
       </button>
     </div>

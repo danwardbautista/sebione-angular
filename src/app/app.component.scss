@@ -15,22 +15,31 @@ $lineColor: #d9d7d7;
 }
 
 .example-sidenav-content {
-    display: flex;
     height: 100%;
-    align-items: center;
-    justify-content: center;
+    padding: 50px;
 }
 
 .example-sidenav {
-    padding-top: 25px;
+    width: 250px;
 }
 
-// .sidenav-button-container{
-    
-// }
+.sidenav-button-container{
+    width: 100%;
+}
+
+.sidenav-logo{
+    height: auto;
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
 
 .sidenav-button{
-    min-width: 200px;
+    width: 100%;
     border-top: 1px $lineColor solid;
     border-radius: 0px;
 }
