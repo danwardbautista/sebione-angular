@@ -1,9 +1,20 @@
-<button class="btn btnAnimation font" mat-raised-button mat-raised-button color="primary">
+<div style="float:right;">
+<mat-form-field appearance="outline">
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filter table" #input>
+</mat-form-field>
+</div>
+
+<div style="padding-top: 10px;padding-bottom: 25px;">
+<button class="btn btnAnimation font" mat-raised-button mat-raised-button color="primary" (click)="open(content)">
     <mat-icon>library_add</mat-icon>
     Add Company
  </button>
+ <br>
+</div>
 
-<div class="mat-elevation-z8">
+ <!-- MAIN TABLE -->
+<div class="mat-elevation-z3">
 
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
   
@@ -62,3 +73,59 @@
                    aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
+
+
+  <ng-template #content let-modal>
+	<div class="modal-header">
+		<div style="font-size: 25px;">Add Company</div>
+		<button type="button" class="btn-close" aria-label="Close" id="cancel" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+    <form [formGroup]="formValuesCompany">
+	<div class="modal-body">
+        <mat-label>Company Name</mat-label>
+		<mat-form-field appearance="outline" style="width: 100%;">
+            <input matInput placeholder="Ex: Google" formControlName='name'>
+        </mat-form-field>
+
+        <mat-label>Company Email</mat-label>
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <input matInput placeholder="Ex: google@gmail.com" formControlName='email'>
+        </mat-form-field>
+
+        <mat-label>Company Logo</mat-label><br>
+        <input type="file"
+               name="avatar"
+               accept="image/png, image/jpeg">
+        <br>
+        <br>
+
+        <mat-label>Company Website</mat-label>
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <input matInput placeholder="Ex: https://www.google.com/" formControlName='website'>
+        </mat-form-field>
+
+
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btnAnimation font" mat-raised-button mat-raised-button  color="primary" (click)="postCompanies()">Submit</button>
+	</div>
+    </form>
+
+
+   
+</ng-template>
+
+<ng-template #ErrorModal let-modal>
+    <div class="modal-header error-modal-header">
+        Server Error
+    </div>
+    <div class="modal-body">
+        {{NameError}}<br *ngIf="NameError !== undefined">
+        {{EmailError}}<br *ngIf="EmailError !== undefined">
+        {{WebsiteError}}
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btnAnimation font" mat-raised-button mat-raised-button  color="warn" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>

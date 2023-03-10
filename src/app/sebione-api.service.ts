@@ -24,4 +24,12 @@ export class SebioneApiService {
       return res;
     }))
   }
+
+  postCompaniesAPI(data: any) {
+    console.log(data);
+    return this.http.post('http://localhost:8000/api/company', data)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
 }
