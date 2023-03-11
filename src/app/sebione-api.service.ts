@@ -32,4 +32,20 @@ export class SebioneApiService {
         return res;
       }))
   }
+
+  editCompaniesAPI(data: any, id: number) {
+    console.log(data);
+    return this.http.post('http://localhost:8000/api/company/' +id, data)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  deleteCompaniesAPI(id: number) {
+    console.log(id);
+    return this.http.delete('http://localhost:8000/api/company/' + id)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
 }

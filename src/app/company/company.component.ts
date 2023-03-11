@@ -29,11 +29,20 @@ export class CompanyComponent implements AfterViewInit {
   @ViewChild("ErrorModal") private attachmentModalRef: TemplateRef<Object>;
 
 
-  columns: string[] = ['id','name', 'email', 'logo', 'website'];
+  columns: string[] = ['id','name', 'email', 'logo', 'website', 'action'];
   formValuesCompany !: FormGroup;
   NameError:any;
   EmailError:any;
+  LogoError:any;
   WebsiteError:any;
+  image:any;
+  selectedFileImage:any=null;
+  showAdd:boolean;
+  showEdit:boolean;
+  uploadedImage:any;
+  rowID:any;
+  deleteID:any;
+  deleteCompany:any;
 
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
@@ -75,16 +84,61 @@ export class CompanyComponent implements AfterViewInit {
     });
   }
 
+  imageModal(getter:any){
+    this.image = getter;
+  }
+
+  onFileSelectImage(event:any) {
+    this.selectedFileImage = <File>event.target.files[0];
+  }
+
+  clickAddCompany() {
+    this.formValuesCompany.reset();
+    this.showAdd = true;
+    this.showEdit = false;
+  }
+
+  clickEditCompany(element:any) {
+    this.showAdd = false;
+    this.showEdit = true;
+    this.rowID = element.id;
+
+    this.formValuesCompany.controls['name'].setValue(element.name);
+    this.formValuesCompany.controls['email'].setValue(element.email);
+    this.uploadedImage = element.logo;
+    this.formValuesCompany.controls['website'].setValue(element.website);
+  }
+
+  clickDeleteCompany(element:any){
+    this.deleteID = element.id;
+    this.deleteCompany = element.name;
+  }
+
   postCompanies() {
 
-    let name = this.formValuesCompany.value.name;
-    let email = this.formValuesCompany.value.email;
-    let website = this.formValuesCompany.value.website;
+    let name = "";
+    let email = "";
+    let website = "";
+
+    if(this.formValuesCompany.value.name != null){
+      name = this.formValuesCompany.value.name;
+    }
+    if(this.formValuesCompany.value.email != null){
+      email = this.formValuesCompany.value.email;
+    }
+    if(this.formValuesCompany.value.website != null){
+      website = this.formValuesCompany.value.website;
+    }
+
+    console.log(email);
 
     const formData = new FormData();
-    // formData2.append('file', this.selectedFileImage, this.selectedFileImage.name);
     formData.append('name', name);
     formData.append('email', email)
+    if(this.selectedFileImage!=null)
+    {
+      formData.append('logo', this.selectedFileImage, this.selectedFileImage.name);
+    }
     formData.append('website', website)
 
     this.sebioneService.postCompaniesAPI(formData).subscribe(res => {
@@ -93,22 +147,103 @@ export class CompanyComponent implements AfterViewInit {
       ref?.click();
       this.formValuesCompany.reset();
       this.getCompanies();
+      this._snackBar.open("Company successfully added.", 'Close', {
+        panelClass: 'success-snackbar',
+        verticalPosition: 'bottom',
+        duration: 5000, 
+      });
     },
       err => {
         console.log(err.error);
         this.NameError = err.error.name;
         this.EmailError = err.error.email;
+        this.LogoError = err.error.logo;
         this.WebsiteError = err.error.website;
 
         this.openSm(this.attachmentModalRef);
-        // this._snackBar.open("test!", 'Close', {
-        //   panelClass: 'error-snackbar',
-        //   verticalPosition: 'bottom',
-        // });
+        
       }
     )
   }
 
+  editCompanies() {
+
+    let name = "";
+    let email = "";
+    let website = "";
+
+    if(this.formValuesCompany.value.name != null){
+      name = this.formValuesCompany.value.name;
+    }
+    if(this.formValuesCompany.value.email != null){
+      email = this.formValuesCompany.value.email;
+    }
+    if(this.formValuesCompany.value.website != null){
+      website = this.formValuesCompany.value.website;
+    }
+
+    console.log(email);
+
+    const formData = new FormData();
+    formData.append('_method', 'PUT');
+    formData.append('name', name);
+    formData.append('email', email)
+    if(this.selectedFileImage!=null)
+    {
+      formData.append('logo', this.selectedFileImage, this.selectedFileImage.name);
+    }
+    formData.append('website', website)
+
+    this.sebioneService.editCompaniesAPI(formData, this.rowID).subscribe(res => {
+      console.log(res)
+      let ref = document.getElementById('cancel')
+      ref?.click();
+      this.formValuesCompany.reset();
+      this.getCompanies();
+      this._snackBar.open("Company successfully edited.", 'Close', {
+        panelClass: 'success-snackbar',
+        verticalPosition: 'bottom',
+        duration: 5000, 
+      });
+    },
+      err => {
+        console.log(err.error);
+        this.NameError = err.error.name;
+        this.EmailError = err.error.email;
+        this.LogoError = err.error.logo;
+        this.WebsiteError = err.error.website;
+
+        this.openSm(this.attachmentModalRef);
+        
+      }
+    )
+  }
+
+  deleteCompanies(){
+
+    this.sebioneService.deleteCompaniesAPI(this.deleteID).subscribe(res => {
+      console.log(res)
+      let ref = document.getElementById('cancelDelete')
+      ref?.click();
+      this.getCompanies();
+      this._snackBar.open( this.deleteCompany +" successfully deleted.", 'Close', {
+        panelClass: 'success-snackbar',
+        verticalPosition: 'bottom',
+        duration: 5000, 
+      });
+    },
+      err => {
+        console.log(err.error);
+        this._snackBar.open("An error has occured.", 'Close', {
+          panelClass: 'error-snackbar',
+          verticalPosition: 'bottom',
+          duration: 5000, 
+        });
+        
+      }
+    )
+
+  }
  
   open(content:any) {
     this.modalService.open(content);

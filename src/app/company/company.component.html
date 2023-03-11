@@ -6,7 +6,7 @@
 </div>
 
 <div style="padding-top: 10px;padding-bottom: 25px;">
-<button class="btn btnAnimation font" mat-raised-button mat-raised-button color="primary" (click)="open(content)">
+<button class="btn btnAnimation font" mat-raised-button mat-raised-button color="primary" (click)="open(content)" (click)="clickAddCompany()">
     <mat-icon>library_add</mat-icon>
     Add Company
  </button>
@@ -44,7 +44,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by logo"> Logo </th>
         <td mat-cell *matCellDef="let element"> 
             <ng-container *ngIf="element.logo; else defaultValue">
-              {{element.logo}}
+              
+              <button type="button" class="btn btnAnimation font" mat-flat-button color="accent" (click)="open(ImageModal)" (click)="imageModal(element.logo)">View</button>
             </ng-container>
           </td>
           <ng-template #defaultValue>
@@ -63,21 +64,31 @@
             <span style="color:gray"><i>Empty</i></span>
           </ng-template>
       </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element"> 
+          <button mat-flat-button color="primary" style="margin-right:5px;" (click)="open(content)" (click)="clickEditCompany(element)">Edit</button>
+          <button mat-flat-button color="warn" (click)="open(deleteModal)" (click)="clickDeleteCompany(element)">Delete</button> 
+        </td>
+      </ng-container>
+  
   
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
       <tr mat-row *matRowDef="let row; columns: columns;"></tr>
     </table>
   
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                   showFirstLastButtons
-                   aria-label="Select page of periodic elements">
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
+       showFirstLastButtons
+        aria-label="Select page">
     </mat-paginator>
   </div>
 
 
   <ng-template #content let-modal>
 	<div class="modal-header">
-		<div style="font-size: 25px;">Add Company</div>
+		<div style="font-size: 25px;" *ngIf="showAdd">Add Company</div>
+    <div style="font-size: 25px;" *ngIf="showEdit">Edit Company</div>
 		<button type="button" class="btn-close" aria-label="Close" id="cancel" (click)="modal.dismiss('Cross click')"></button>
 	</div>
     <form [formGroup]="formValuesCompany">
@@ -95,7 +106,10 @@
         <mat-label>Company Logo</mat-label><br>
         <input type="file"
                name="avatar"
-               accept="image/png, image/jpeg">
+               accept="image/png, image/jpeg"
+               (change)="onFileSelectImage($event)">
+        <br>
+        <small *ngIf="showEdit">Uploaded image: {{uploadedImage}}</small>
         <br>
         <br>
 
@@ -107,7 +121,8 @@
 
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btnAnimation font" mat-raised-button mat-raised-button  color="primary" (click)="postCompanies()">Submit</button>
+		<button type="submit" class="btn btnAnimation font" mat-raised-button mat-raised-button  color="primary" (click)="postCompanies()" *ngIf="showAdd">Submit</button>
+    <button type="submit" class="btn btnAnimation font" mat-raised-button mat-raised-button  color="primary" (click)="editCompanies()" *ngIf="showEdit">Edit</button>
 	</div>
     </form>
 
@@ -122,10 +137,42 @@
     <div class="modal-body">
         {{NameError}}<br *ngIf="NameError !== undefined">
         {{EmailError}}<br *ngIf="EmailError !== undefined">
+        {{LogoError}}<br *ngIf="LogoError !== undefined">
         {{WebsiteError}}
 
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btnAnimation font" mat-raised-button mat-raised-button  color="warn" (click)="modal.close('Save click')">Close</button>
     </div>
+</ng-template>
+
+<ng-template #ImageModal let-modal>
+  <div class="modal-header image-modal-header">
+      Image Display
+  </div>
+  <div class="modal-body">
+      <span>FileName: {{image}}</span>
+      <img style="width:100%;height:100%;" src="http://localhost:8000/api/companylogo/{{image}}">
+
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btnAnimation font" mat-raised-button mat-raised-button  color="warn" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+
+
+<ng-template #deleteModal let-modal>
+  <div class="modal-header" style="background-color:#f44336;">
+     <h2 class="modal-title" style="color:white;">Confirm delete</h2>
+  </div>
+  <div class="modal-body ">
+        <h3 class="justify-content-center">Delete <b>{{deleteCompany}}</b>? This company data will be deleted permanently and can not be
+           recovered.</h3>
+  </div>
+  <div class="modal-footer justify-content-center">
+     <button (click)="deleteCompanies()" class="btn btnAnimation" mat-raised-button color="warn"
+        style="margin:15px;">Yes</button>
+     <button type="button" id="cancelDelete" class="btn btnAnimation font" mat-raised-button color="primary"
+        style="margin:15px;" (click)="modal.dismiss('Cross click')">No</button>
+  </div>
 </ng-template>
