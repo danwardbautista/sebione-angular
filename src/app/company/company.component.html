@@ -6,15 +6,12 @@
 </div>
 
 <div style="padding-top: 10px;padding-bottom: 25px;">
-<button class="btn btnAnimation font" mat-raised-button mat-raised-button color="primary" (click)="open(content)" (click)="clickAddCompany()">
-    <mat-icon>library_add</mat-icon>
-    Add Company
- </button>
+ <button href="#" class="main-button" (click)="open(content)" (click)="clickAddCompany()"><mat-icon style="margin-right: 5px;">library_add</mat-icon>Add Company</button>
  <br>
 </div>
 
  <!-- MAIN TABLE -->
-<div class="mat-elevation-z3">
+<div class="dynamic-tables">
 
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
   
@@ -45,7 +42,7 @@
         <td mat-cell *matCellDef="let element"> 
             <ng-container *ngIf="element.logo; else defaultValue">
               
-              <button type="button" class="btn btnAnimation font" mat-flat-button color="accent" (click)="open(ImageModal)" (click)="imageModal(element.logo)">View</button>
+              <a class="view-class" (click)="open(ImageModal)" (click)="imageModal(element.logo)">View</a>
             </ng-container>
           </td>
           <ng-template #defaultValue>
@@ -68,8 +65,8 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action </th>
         <td mat-cell *matCellDef="let element"> 
-          <button mat-flat-button color="primary" style="margin-right:5px;" (click)="open(content)" (click)="clickEditCompany(element)">Edit</button>
-          <button mat-flat-button color="warn" (click)="open(deleteModal)" (click)="clickDeleteCompany(element)">Delete</button> 
+          <button class="secondary-button" style="margin-right:5px;" (click)="open(content)" (click)="clickEditCompany(element)">Edit</button>
+          <button class="error-button" (click)="open(deleteModal)" (click)="clickDeleteCompany(element)">Delete</button> 
         </td>
       </ng-container>
   
@@ -86,10 +83,10 @@
 
 
   <ng-template #content let-modal>
-	<div class="modal-header">
-		<div style="font-size: 25px;" *ngIf="showAdd">Add Company</div>
-    <div style="font-size: 25px;" *ngIf="showEdit">Edit Company</div>
-		<button type="button" class="btn-close" aria-label="Close" id="cancel" (click)="modal.dismiss('Cross click')"></button>
+	<div class="modal-header modal-style-header">
+		<div style="font-size: 20px;" *ngIf="showAdd">Add Company</div>
+    <div style="font-size: 20px;" *ngIf="showEdit">Edit Company</div>
+		<button style="color:White;" type="button" class="btn-close" aria-label="Close" id="cancel" (click)="modal.dismiss('Cross click')"></button>
 	</div>
     <form [formGroup]="formValuesCompany">
 	<div class="modal-body">
@@ -121,8 +118,8 @@
 
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btnAnimation font" mat-raised-button mat-raised-button  color="primary" (click)="postCompanies()" *ngIf="showAdd">Submit</button>
-    <button type="submit" class="btn btnAnimation font" mat-raised-button mat-raised-button  color="primary" (click)="editCompanies()" *ngIf="showEdit">Edit</button>
+		<button type="submit" class="secondary-button" (click)="postCompanies()" *ngIf="showAdd">Submit</button>
+    <button type="submit" class="secondary-button" (click)="editCompanies()" *ngIf="showEdit">Update</button>
 	</div>
     </form>
 
@@ -162,7 +159,7 @@
 
 
 <ng-template #deleteModal let-modal>
-  <div class="modal-header" style="background-color:#f44336;">
+  <div class="modal-header" style="background-color:#f44336;justify-content: center;">
      <h2 class="modal-title" style="color:white;">Confirm delete</h2>
   </div>
   <div class="modal-body ">

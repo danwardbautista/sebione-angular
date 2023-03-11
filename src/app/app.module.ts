@@ -24,18 +24,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { EmployeeComponent } from './employee/employee.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent },
+  { path: 'employee', component: EmployeeComponent },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    CompanyComponent
+    CompanyComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,

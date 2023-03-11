@@ -1,8 +1,12 @@
 input::file-selector-button {
-    font-weight: bold;
-    color: dodgerblue;
+    font-weight: 500;
+    color: white;
+    background-color: #5D67FF;
     padding: 0.5em;
-    border: thin solid grey;
     border-radius: 3px;
+    border:none;
 }
 
+.view-class:hover{
+    cursor:pointer;
+}

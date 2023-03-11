@@ -1,6 +1,6 @@
 <mat-drawer-container class="example-container" autosize>
 
-  <mat-toolbar color="primary">
+  <mat-toolbar class="custom-toolbar">
     <button type="button" mat-mini-fab (click)="drawer.toggle()" color="secondary" style="box-shadow: none;">
       <mat-icon>menu</mat-icon>
     </button>
@@ -19,15 +19,21 @@
    <img src="https://sebitechnologies.com/SBT-logo-short-horizontal-colored.png" class="sidenav-logo">
 
     <div class="sidenav-button-container">
-      <button routerLink="dashboard" mat-flat-button class="sidenav-button">
-        <mat-icon>dashboard</mat-icon>
+      <button routerLink="dashboard" class="sidenav-button" routerLinkActive="active">
+        <mat-icon class="sidenav-button-icon">dashboard</mat-icon>
         Dashboard
       </button>
     </div>
     <div class="sidenav-button-container">
-      <button routerLink="company" mat-flat-button class="sidenav-button">
-        <mat-icon>business</mat-icon>
+      <button routerLink="company" class="sidenav-button" routerLinkActive="active">
+        <mat-icon class="sidenav-button-icon">business</mat-icon>
         Company
+      </button>
+    </div>
+    <div class="sidenav-button-container">
+      <button routerLink="employee" class="sidenav-button" routerLinkActive="active">
+        <mat-icon class="sidenav-button-icon">person</mat-icon>
+        Employee
       </button>
     </div>
   </mat-drawer>
