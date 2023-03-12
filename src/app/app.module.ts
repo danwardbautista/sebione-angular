@@ -25,6 +25,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EmployeeComponent } from './employee/employee.component';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -53,6 +55,8 @@ const routes: Routes = [
     MatSortModule,
     MatInputModule,
     MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,

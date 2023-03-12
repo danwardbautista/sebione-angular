@@ -48,4 +48,19 @@ export class SebioneApiService {
         return res;
       }))
   }
+
+  getEmployeesAPI() {
+    return this.http.get('http://localhost:8000/api/employee')
+    .pipe(map((res: any) => {
+      return res;
+    }))
+  }
+
+  postEmployeesAPI(data: any) {
+    console.log(data);
+    return this.http.post('http://localhost:8000/api/employee', data)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
 }

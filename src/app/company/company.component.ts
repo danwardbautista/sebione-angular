@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef } from '@angul
 import { MatTableDataSource } from '@angular/material/table';
 import { SebioneApiService } from '../sebione-api.service';
 import { MatPaginator } from '@angular/material/paginator';
-import {MatSort, Sort} from '@angular/material/sort'
-import {LiveAnnouncer} from '@angular/cdk/a11y';
+import { MatSort, Sort } from '@angular/material/sort'
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormControl, FormControlName, FormGroup, Validators, ValidatorFn, AbstractControl, NgForm, FormGroupDirective, FormArray } from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface IPost {
   id: number;
@@ -29,20 +29,20 @@ export class CompanyComponent implements AfterViewInit {
   @ViewChild("ErrorModal") private attachmentModalRef: TemplateRef<Object>;
 
 
-  columns: string[] = ['id','name', 'email', 'logo', 'website', 'action'];
+  columns: string[] = ['id', 'name', 'email', 'logo', 'website', 'action'];
   formValuesCompany !: FormGroup;
-  NameError:any;
-  EmailError:any;
-  LogoError:any;
-  WebsiteError:any;
-  image:any;
-  selectedFileImage:any=null;
-  showAdd:boolean;
-  showEdit:boolean;
-  uploadedImage:any;
-  rowID:any;
-  deleteID:any;
-  deleteCompany:any;
+  NameError: any;
+  EmailError: any;
+  LogoError: any;
+  WebsiteError: any;
+  image: any;
+  selectedFileImage: any = null;
+  showAdd: boolean;
+  showEdit: boolean;
+  uploadedImage: any;
+  rowID: any;
+  deleteID: any;
+  deleteCompany: any;
 
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
@@ -84,11 +84,11 @@ export class CompanyComponent implements AfterViewInit {
     });
   }
 
-  imageModal(getter:any){
+  imageModal(getter: any) {
     this.image = getter;
   }
 
-  onFileSelectImage(event:any) {
+  onFileSelectImage(event: any) {
     this.selectedFileImage = <File>event.target.files[0];
   }
 
@@ -98,7 +98,7 @@ export class CompanyComponent implements AfterViewInit {
     this.showEdit = false;
   }
 
-  clickEditCompany(element:any) {
+  clickEditCompany(element: any) {
     this.showAdd = false;
     this.showEdit = true;
     this.rowID = element.id;
@@ -109,7 +109,7 @@ export class CompanyComponent implements AfterViewInit {
     this.formValuesCompany.controls['website'].setValue(element.website);
   }
 
-  clickDeleteCompany(element:any){
+  clickDeleteCompany(element: any) {
     this.deleteID = element.id;
     this.deleteCompany = element.name;
   }
@@ -120,13 +120,13 @@ export class CompanyComponent implements AfterViewInit {
     let email = "";
     let website = "";
 
-    if(this.formValuesCompany.value.name != null){
+    if (this.formValuesCompany.value.name != null) {
       name = this.formValuesCompany.value.name;
     }
-    if(this.formValuesCompany.value.email != null){
+    if (this.formValuesCompany.value.email != null) {
       email = this.formValuesCompany.value.email;
     }
-    if(this.formValuesCompany.value.website != null){
+    if (this.formValuesCompany.value.website != null) {
       website = this.formValuesCompany.value.website;
     }
 
@@ -135,8 +135,7 @@ export class CompanyComponent implements AfterViewInit {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('email', email)
-    if(this.selectedFileImage!=null)
-    {
+    if (this.selectedFileImage != null) {
       formData.append('logo', this.selectedFileImage, this.selectedFileImage.name);
     }
     formData.append('website', website)
@@ -150,7 +149,7 @@ export class CompanyComponent implements AfterViewInit {
       this._snackBar.open("Company successfully added.", 'Close', {
         panelClass: 'success-snackbar',
         verticalPosition: 'bottom',
-        duration: 5000, 
+        duration: 5000,
       });
     },
       err => {
@@ -161,7 +160,7 @@ export class CompanyComponent implements AfterViewInit {
         this.WebsiteError = err.error.website;
 
         this.openSm(this.attachmentModalRef);
-        
+
       }
     )
   }
@@ -172,13 +171,13 @@ export class CompanyComponent implements AfterViewInit {
     let email = "";
     let website = "";
 
-    if(this.formValuesCompany.value.name != null){
+    if (this.formValuesCompany.value.name != null) {
       name = this.formValuesCompany.value.name;
     }
-    if(this.formValuesCompany.value.email != null){
+    if (this.formValuesCompany.value.email != null) {
       email = this.formValuesCompany.value.email;
     }
-    if(this.formValuesCompany.value.website != null){
+    if (this.formValuesCompany.value.website != null) {
       website = this.formValuesCompany.value.website;
     }
 
@@ -188,8 +187,7 @@ export class CompanyComponent implements AfterViewInit {
     formData.append('_method', 'PUT');
     formData.append('name', name);
     formData.append('email', email)
-    if(this.selectedFileImage!=null)
-    {
+    if (this.selectedFileImage != null) {
       formData.append('logo', this.selectedFileImage, this.selectedFileImage.name);
     }
     formData.append('website', website)
@@ -203,7 +201,7 @@ export class CompanyComponent implements AfterViewInit {
       this._snackBar.open("Company successfully edited.", 'Close', {
         panelClass: 'success-snackbar',
         verticalPosition: 'bottom',
-        duration: 5000, 
+        duration: 5000,
       });
     },
       err => {
@@ -214,22 +212,22 @@ export class CompanyComponent implements AfterViewInit {
         this.WebsiteError = err.error.website;
 
         this.openSm(this.attachmentModalRef);
-        
+
       }
     )
   }
 
-  deleteCompanies(){
+  deleteCompanies() {
 
     this.sebioneService.deleteCompaniesAPI(this.deleteID).subscribe(res => {
       console.log(res)
       let ref = document.getElementById('cancelDelete')
       ref?.click();
       this.getCompanies();
-      this._snackBar.open( this.deleteCompany +" successfully deleted.", 'Close', {
+      this._snackBar.open(this.deleteCompany + " successfully deleted.", 'Close', {
         panelClass: 'success-snackbar',
         verticalPosition: 'bottom',
-        duration: 5000, 
+        duration: 5000,
       });
     },
       err => {
@@ -237,27 +235,27 @@ export class CompanyComponent implements AfterViewInit {
         this._snackBar.open("An error has occured.", 'Close', {
           panelClass: 'error-snackbar',
           verticalPosition: 'bottom',
-          duration: 5000, 
+          duration: 5000,
         });
-        
+
       }
     )
 
   }
- 
-  open(content:any) {
+
+  open(content: any) {
     this.modalService.open(content);
   }
 
-  openSm(content:any) {
+  openSm(content: any) {
     this.modalService.open(content, { size: 'sm' });
   }
 
-  openLg(content:any) {
+  openLg(content: any) {
     this.modalService.open(content, { size: 'lg' });
   }
 
-  openXl(content:any) {
+  openXl(content: any) {
     this.modalService.open(content, { size: 'xl' });
   }
 
