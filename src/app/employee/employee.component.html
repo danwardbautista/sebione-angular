@@ -104,10 +104,22 @@
           <input matInput placeholder="Ex: Doe" formControlName='last_name'>
         </mat-form-field>
 
-        <mat-label>Company ID</mat-label>
+        <!-- <mat-label>Company ID</mat-label>
         <mat-form-field appearance="outline" style="width: 100%;">
           <input matInput placeholder="Ex: 1" formControlName='FK_employees_companies'>
+        </mat-form-field> -->
+
+        <mat-label>Employee Company</mat-label>
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-select placeholder="None" formControlName='FK_employees_companies'>
+            <mat-form-field appearance="fill" style="width: 100%;">
+              <!-- <mat-label>Search:</mat-label> -->
+              <input matInput placeholder="Ex: Company Name" (input)="applyCompanyFilter($event)">
+            </mat-form-field>
+            <mat-option *ngFor="let row of companyCaptureFilter" value="{{row.value.id}}">{{row.value.name}}</mat-option>
+          </mat-select>
         </mat-form-field>
+
 
         <mat-label>Employee Email</mat-label>
         <mat-form-field appearance="outline" style="width: 100%;">
@@ -132,10 +144,10 @@
       Server Error
     </div>
     <div class="modal-body">
-      {{FirstNameError}}<br *ngIf="FirstNameError !== undefined">
-      {{LastNameError}}<br *ngIf="LastNameError !== undefined">
-      {{CompanyError}}<br *ngIf="CompanyError !== undefined">
-      {{EmailError}}<br *ngIf="EmailError !== undefined">
+      {{FirstNameError}}<hr *ngIf="FirstNameError !== undefined">
+      {{LastNameError}}<hr *ngIf="LastNameError !== undefined">
+      {{CompanyError}}<hr *ngIf="CompanyError !== undefined">
+      {{EmailError}}<hr *ngIf="EmailError !== undefined">
       {{PhoneError}}
   
     </div>

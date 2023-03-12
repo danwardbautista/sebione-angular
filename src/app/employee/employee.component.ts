@@ -18,9 +18,9 @@ interface IPost {
   phone: string;
 }
 
-interface Food {
-  value: string;
-  viewValue: string;
+interface CompanyPost {
+  id: number;
+  name: string;
 }
 
 @Component({
@@ -33,6 +33,8 @@ export class EmployeeComponent {
   columns: string[] = ['id','first_name', 'last_name', 'name', 'email', 'phone', 'action'];
   dataSource: MatTableDataSource<IPost>;
   posts: IPost[] = [];
+  companyCapture: any;
+  companyCaptureFilter:any;
   showAdd: boolean;
   showEdit: boolean;
   FirstNameError:any;
@@ -43,11 +45,6 @@ export class EmployeeComponent {
   formValuesEmployee !: FormGroup;
   selectedValue:string;
 
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -67,6 +64,28 @@ export class EmployeeComponent {
     );
 
     this.getEmployees();
+    this.getCompanies();
+  }
+
+  getCompanies() {
+    this.sebioneService.getCompaniesAPI().subscribe(res => {
+      this.companyCapture = res.results;
+    });
+  }
+
+  applyCompanyFilter(event:any) {
+
+    const filterValue = event ? event.target.value.toLowerCase() : '';
+
+    this.companyCaptureFilter = this.companyCapture
+      .map((x:any, index:any) => ({
+        index: index,
+        value: x,
+      }))
+      .filter((y: any) => y.value.name.toLowerCase().includes(filterValue));
+
+      // console.log(this.companyCaptureFilter);
+    
   }
   
   getEmployees() {
@@ -151,6 +170,14 @@ export class EmployeeComponent {
     this.formValuesEmployee.reset();
     this.showAdd = true;
     this.showEdit = false;
+    this.applyCompanyFilter(null);
+  }
+
+  clickEditEmployee() {
+    this.formValuesEmployee.reset();
+    this.showAdd = false;
+    this.showEdit = true;
+    this.applyCompanyFilter(null);
   }
 
   open(content: any) {
