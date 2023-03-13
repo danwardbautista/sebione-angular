@@ -63,4 +63,20 @@ export class SebioneApiService {
         return res;
       }))
   }
+
+  editEmployeesAPI(data: any, id: number) {
+    console.log(data);
+    return this.http.post('http://localhost:8000/api/employee/' +id, data)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  deleteEmployeesAPI(id: number) {
+    console.log(id);
+    return this.http.delete('http://localhost:8000/api/employee/' + id)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
 }

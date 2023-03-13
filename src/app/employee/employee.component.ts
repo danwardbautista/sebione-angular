@@ -44,7 +44,11 @@ export class EmployeeComponent {
   PhoneError:any;
   formValuesEmployee !: FormGroup;
   selectedValue:string;
-
+  editRowID:any;
+  selected:any = "None";
+  deleteRowID:any;
+  deleteFirstName:any;
+  deleteLastName:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -167,17 +171,120 @@ export class EmployeeComponent {
   }
 
   clickAddEmployee() {
+    this.selected = "None";
     this.formValuesEmployee.reset();
     this.showAdd = true;
     this.showEdit = false;
     this.applyCompanyFilter(null);
   }
 
-  clickEditEmployee() {
+  clickEditEmployee(element:any) {
     this.formValuesEmployee.reset();
     this.showAdd = false;
     this.showEdit = true;
     this.applyCompanyFilter(null);
+    this.editRowID = element.id;
+    this.selected = element.name;
+
+    this.formValuesEmployee.controls['first_name'].setValue(element.first_name);
+    this.formValuesEmployee.controls['last_name'].setValue(element.last_name);
+    this.formValuesEmployee.controls['FK_employees_companies'].setValue(element.FK_employees_companies);
+    this.formValuesEmployee.controls['email'].setValue(element.email);
+    this.formValuesEmployee.controls['phone'].setValue(element.phone);
+  }
+
+  clickDeleteEmployee(element: any) {
+    this.deleteRowID = element.id;
+    this.deleteFirstName = element.first_name;
+    this.deleteLastName = element.last_name;
+  }
+
+  editEmployees() {
+
+    let first_name = "";
+    let last_name = "";
+    let FK_employees_companies = "";
+    let email = "";
+    let phone = "";
+
+    if (this.formValuesEmployee.value.first_name != null) {
+      first_name = this.formValuesEmployee.value.first_name;
+    }
+
+    if (this.formValuesEmployee.value.last_name != null) {
+      last_name = this.formValuesEmployee.value.last_name;
+    }
+
+    if (this.formValuesEmployee.value.FK_employees_companies != null) {
+      FK_employees_companies = this.formValuesEmployee.value.FK_employees_companies;
+    }
+
+    if (this.formValuesEmployee.value.email != null) {
+      email = this.formValuesEmployee.value.email;
+    }
+
+    if (this.formValuesEmployee.value.phone != null) {
+      phone = this.formValuesEmployee.value.phone;
+    }
+
+    const formData = new FormData();
+    formData.append('_method', 'PUT');
+    formData.append('first_name', first_name);
+    formData.append('last_name', last_name);
+    formData.append('FK_employees_companies', FK_employees_companies);
+    formData.append('email', email);
+    formData.append('phone', phone);
+
+    this.sebioneService.editEmployeesAPI(formData, this.editRowID).subscribe(res => {
+      console.log(res)
+      let ref = document.getElementById('cancel')
+      ref?.click();
+      this.formValuesEmployee.reset();
+      this.getEmployees();
+      this._snackBar.open("Employee successfully edited.", 'Close', {
+        panelClass: 'success-snackbar',
+        verticalPosition: 'bottom',
+        duration: 5000,
+      });
+    },
+      err => {
+        console.log(err.error);
+        this.FirstNameError = err.error.first_name;
+        this.LastNameError = err.error.last_name;
+        this.CompanyError = err.error.FK_employees_companies;
+        this.EmailError = err.error.email;
+        this.PhoneError = err.error.phone;
+
+        this.openSm(this.attachmentModalRef);
+
+      }
+    )
+  }
+
+  deleteEmployees() {
+
+    this.sebioneService.deleteEmployeesAPI(this.deleteRowID).subscribe(res => {
+      console.log(res)
+      let ref = document.getElementById('cancelDelete')
+      ref?.click();
+      this.getEmployees();
+      this._snackBar.open(this.deleteFirstName + " " + this.deleteLastName + " successfully deleted.", 'Close', {
+        panelClass: 'success-snackbar',
+        verticalPosition: 'bottom',
+        duration: 5000,
+      });
+    },
+      err => {
+        console.log(err.error);
+        this._snackBar.open("An error has occured.", 'Close', {
+          panelClass: 'error-snackbar',
+          verticalPosition: 'bottom',
+          duration: 5000,
+        });
+
+      }
+    )
+
   }
 
   open(content: any) {
