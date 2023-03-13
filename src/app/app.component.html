@@ -1,6 +1,6 @@
 <mat-drawer-container class="example-container" autosize>
 
-  <mat-toolbar class="custom-toolbar">
+  <mat-toolbar class="custom-toolbar" [hidden]="!isUserLoggedIn">
     <button type="button" mat-mini-fab (click)="drawer.toggle()" color="secondary" style="box-shadow: none;">
       <mat-icon>menu</mat-icon>
     </button>
@@ -15,7 +15,7 @@
   </mat-toolbar>
 
 
-  <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened="true" [hidden]="!isUserLoggedIn">
    <img src="https://sebitechnologies.com/SBT-logo-short-horizontal-colored.png" class="sidenav-logo">
 
     <div class="sidenav-button-container">
@@ -35,6 +35,11 @@
         <mat-icon class="sidenav-button-icon">person</mat-icon>
         Employee
       </button>
+    </div>
+    
+    <div style="position: fixed;bottom: 0;padding-left:60px;padding-bottom: 40px;">
+    <button class="logout-button" style="height: 100%;width: 100%;" (click)="postLogout()"><mat-icon
+      style="margin-right: 5px;">logout</mat-icon>Logout</button>
     </div>
   </mat-drawer>
 

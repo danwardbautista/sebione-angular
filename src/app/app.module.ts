@@ -27,9 +27,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EmployeeComponent } from './employee/employee.component';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'employee', component: EmployeeComponent },
@@ -40,7 +42,8 @@ const routes: Routes = [
     AppComponent,
     DashboardComponent,
     CompanyComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

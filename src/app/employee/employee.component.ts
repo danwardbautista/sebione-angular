@@ -7,6 +7,8 @@ import {LiveAnnouncer} from '@angular/cdk/a11y';
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormControl, FormControlName, FormGroup, Validators, ValidatorFn, AbstractControl, NgForm, FormGroupDirective, FormArray } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { AppComponent } from '../app.component';
+import { Router } from '@angular/router';
 
 interface IPost {
   id: number;
@@ -54,7 +56,7 @@ export class EmployeeComponent {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild("ErrorModal") private attachmentModalRef: TemplateRef<Object>;
 
-  constructor(private sebioneService: SebioneApiService, private _liveAnnouncer: LiveAnnouncer, private modalService: NgbModal, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
+  constructor(private router: Router, private appcomponent: AppComponent, private sebioneService: SebioneApiService, private _liveAnnouncer: LiveAnnouncer, private modalService: NgbModal, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.formValuesEmployee = this.formBuilder.group(
@@ -67,8 +69,22 @@ export class EmployeeComponent {
       }
     );
 
+    this.getuser();
     this.getEmployees();
     this.getCompanies();
+    
+  }
+
+  getuser() {
+    this.sebioneService.getCurrentUser().subscribe(res => {
+      console.log("Authenticated");
+      // this.appcomponent.isUserLoggedIn = true;
+    },
+    err => {
+      console.log("Not Authenticated");
+      this.router.navigate(['/login']);
+    }
+  );
   }
 
   getCompanies() {
