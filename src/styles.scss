@@ -29,29 +29,9 @@ body {
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.some-custom-class-name {
-	&.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-		transform: none;
-		width: initial;
-		opacity: 0;
-	}
-
-	&.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap {
-		border-top-color: initial;
-	}
-
-	/* Not required, only used to reposition the label slightly
-	&.mat-form-field-appearance-outline .mat-form-field-label {
-	  top: 1.54375em;
-	  margin-top: -0.25em;
-	}
-	*/
-}
-
-.cdk-global-overlay-wrapper,
-.cdk-overlay-container {
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
 	z-index: 99999 !important;
-}
+ }
 
 .success-snackbar {
 	color: white;
