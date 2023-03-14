@@ -4,4 +4,5 @@ Run the following commands inside directory terminal
 2. ng add @angular/material  
 3. ng add @ng-bootstrap/ng-bootstrap
 4. ng add ng2-charts
-5. ng serve --open
+5. npm install chart.js
+6. ng serve --open

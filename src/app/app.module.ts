@@ -28,6 +28,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { LoginComponent } from './login/login.component';
+import { NgChartsModule } from 'ng2-charts';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -67,7 +68,8 @@ const routes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
-    NgbModule
+    NgbModule,
+    NgChartsModule
   ],
   providers: [SebioneApiService],
   bootstrap: [AppComponent]

@@ -2,17 +2,18 @@
     <div class="d-flex">
         <div class="mr-auto p-2">Welcome, Admin!</div>
         <div class="p-2">{{currentDate | date:'fullDate' }}</div>
-      </div>
+    </div>
 </div>
 
-<div style="width:100%;">
+<div style="width:100%;margin-bottom: 10px;">
     <div class="row">
         <div class="col-sm">
             <div class="info-box info-box-class">
-                <span class="info-box-icon icon-color" style="background-color: #0b5575;"><mat-icon>business</mat-icon></span>
+                <span class="info-box-icon icon-color"
+                    style="background-color: #0b5575;"><mat-icon>business</mat-icon></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Companies</span>
-                    <span class="info-box-number" style="font-size:25px;">41,410</span>
+                    <span class="info-box-number" style="font-size:25px;">{{companiesCount}}</span>
                     <div class="progress">
                         <div class="progress-bar bg-info" style="width: 100%"></div>
                     </div>
@@ -24,10 +25,11 @@
         </div>
         <div class="col-sm">
             <div class="info-box info-box-class">
-                <span class="info-box-icon icon-color" style="background-color: #0b2b75;"><mat-icon>person</mat-icon></span>
+                <span class="info-box-icon icon-color"
+                    style="background-color: #0b2b75;"><mat-icon>person</mat-icon></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Employees</span>
-                    <span class="info-box-number" style="font-size:25px;">41,410</span>
+                    <span class="info-box-number" style="font-size:25px;">{{employeesCount}}</span>
                     <div class="progress">
                         <div class="progress-bar bg-info" style="width: 100%"></div>
                     </div>
@@ -39,7 +41,8 @@
         </div>
         <div class="col-sm">
             <div class="info-box info-box-class">
-                <span class="info-box-icon icon-color" style="background-color: #0d0b75;"><mat-icon>mail</mat-icon></span>
+                <span class="info-box-icon icon-color"
+                    style="background-color: #0d0b75;"><mat-icon>mail</mat-icon></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Uptime</span>
                     <span class="info-box-number" style="font-size:25px;">99.8%</span>
@@ -54,7 +57,8 @@
         </div>
         <div class="col-sm">
             <div class="info-box info-box-class">
-                <span class="info-box-icon icon-color" style="background-color: #400b75;"><mat-icon>business</mat-icon></span>
+                <span class="info-box-icon icon-color"
+                    style="background-color: #400b75;"><mat-icon>business</mat-icon></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Usage</span>
                     <span class="info-box-number" style="font-size:25px;">56%</span>
@@ -66,6 +70,28 @@
                     </span>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-7">
+        <div class="size"
+            style="display: block;background-color: white;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;border-radius: 7px;padding:20px;max-height: 700px;">
+            <h1>Company Activity</h1>
+            <canvas baseChart height="210" [type]="'line'" [data]="lineChartData" [options]="lineChartOptions"
+                [legend]="lineChartLegend">
+            </canvas>
+        </div>
+    </div>
+    <div class="col-5">
+        <div class="size"
+            style="display: block;background-color: white;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;border-radius: 7px;padding:30px;max-height: 700px;">
+            <h1>Employee Organization</h1>
+            <canvas baseChart height="50" [type]="'pie'" [datasets]="pieChartDatasets" [labels]="pieChartLabels"
+                [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+            </canvas>
+
         </div>
     </div>
 </div>

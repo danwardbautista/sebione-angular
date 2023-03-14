@@ -39,6 +39,13 @@ export class SebioneApiService {
       }))
   }
 
+  getDashboardInfo() {
+    return this.http.get('http://localhost:8000/api/dashboardInfo', this.getHeaders())
+    .pipe(map((res: any) => {
+      return res;
+    }))
+  }
+
   getCurrentUser() {
     return this.http.get('http://localhost:8000/api/getuser', this.getHeaders())
     .pipe(map((res: any) => {
