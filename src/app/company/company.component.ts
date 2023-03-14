@@ -45,6 +45,7 @@ export class CompanyComponent implements AfterViewInit {
   rowID: any;
   deleteID: any;
   deleteCompany: any;
+  tableLoaded:boolean=false;
 
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
@@ -96,6 +97,7 @@ export class CompanyComponent implements AfterViewInit {
 
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.tableLoaded = true;
     });
   }
 

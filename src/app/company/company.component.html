@@ -1,84 +1,90 @@
-<div style="float:right;">
-  <mat-form-field appearance="outline">
-    <mat-label>Search</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Filter table" #input>
-  </mat-form-field>
+<div class="loader-container" [hidden]="tableLoaded">
+  <div class="loader"></div>
 </div>
 
-<div style="padding-top: 10px;padding-bottom: 25px;">
-  <button href="#" class="main-button" (click)="open(content)" (click)="clickAddCompany()"><mat-icon
-      style="margin-right: 5px;">library_add</mat-icon>Add Company</button>
-  <br>
-</div>
+<div [hidden]="!tableLoaded">
+  <div style="float:right;">
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter table" #input>
+    </mat-form-field>
+  </div>
 
-<!-- MAIN TABLE -->
-<div class="dynamic-tables">
+  <div style="padding-top: 10px;padding-bottom: 25px;">
+    <button href="#" class="main-button" (click)="open(content)" (click)="clickAddCompany()"><mat-icon
+        style="margin-right: 5px;">library_add</mat-icon>Add Company</button>
+    <br>
+  </div>
 
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+  <!-- MAIN TABLE -->
+  <div class="dynamic-tables">
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id"> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id"> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by email"> Email </th>
-      <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="element.email; else defaultValue">
-          {{element.email}}
-        </ng-container>
-      </td>
-      <ng-template #defaultValue>
-        <span style="color:gray"><i>Empty</i></span>
-      </ng-template>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="logo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by logo"> Logo </th>
-      <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="element.logo; else defaultValue2">
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by email"> Email </th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.email; else defaultValue">
+            {{element.email}}
+          </ng-container>
+        </td>
+        <ng-template #defaultValue>
+          <span style="color:gray"><i>Empty</i></span>
+        </ng-template>
+      </ng-container>
 
-          <a class="view-class" (click)="open(ImageModal)" (click)="imageModal(element.logo)">View</a>
-        </ng-container>
-      </td>
-      <ng-template #defaultValue2>
-        <span style="color:gray"><i>Empty</i></span>
-      </ng-template>
-    </ng-container>
+      <ng-container matColumnDef="logo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by logo"> Logo </th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.logo; else defaultValue2">
 
-    <ng-container matColumnDef="website">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by website"> Website </th>
-      <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="element.website; else defaultValue3">
-          <a href="{{element.website}}" target="_blank">{{element.website}}</a>
-        </ng-container>
-      </td>
-      <ng-template #defaultValue3>
-        <span style="color:gray"><i>Empty</i></span>
-      </ng-template>
-    </ng-container>
+            <a class="view-class" (click)="open(ImageModal)" (click)="imageModal(element.logo)">View</a>
+          </ng-container>
+        </td>
+        <ng-template #defaultValue2>
+          <span style="color:gray"><i>Empty</i></span>
+        </ng-template>
+      </ng-container>
 
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Action </th>
-      <td mat-cell *matCellDef="let element">
-        <button class="secondary-button" style="margin-right:5px;" (click)="open(content)"
-          (click)="clickEditCompany(element)">Edit</button>
-        <button class="error-button" (click)="open(deleteModal)" (click)="clickDeleteCompany(element)">Delete</button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="website">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by website"> Website </th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.website; else defaultValue3">
+            <a href="{{element.website}}" target="_blank">{{element.website}}</a>
+          </ng-container>
+        </td>
+        <ng-template #defaultValue3>
+          <span style="color:gray"><i>Empty</i></span>
+        </ng-template>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <button class="secondary-button" style="margin-right:5px;" (click)="open(content)"
+            (click)="clickEditCompany(element)">Edit</button>
+          <button class="error-button" (click)="open(deleteModal)" (click)="clickDeleteCompany(element)">Delete</button>
+        </td>
+      </ng-container>
 
 
-    <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    </table>
 
-  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page">
-  </mat-paginator>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page">
+    </mat-paginator>
+  </div>
 </div>
 
 <ng-template #content let-modal>
@@ -126,9 +132,12 @@
     Server Error
   </div>
   <div class="modal-body">
-    {{NameError}}<hr *ngIf="NameError !== undefined">
-    {{EmailError}}<hr *ngIf="EmailError !== undefined">
-    {{LogoError}}<hr *ngIf="LogoError !== undefined">
+    {{NameError}}
+    <hr *ngIf="NameError !== undefined">
+    {{EmailError}}
+    <hr *ngIf="EmailError !== undefined">
+    {{LogoError}}
+    <hr *ngIf="LogoError !== undefined">
     {{WebsiteError}}
 
   </div>

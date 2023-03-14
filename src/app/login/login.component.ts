@@ -41,7 +41,7 @@ export class LoginComponent {
     this.sebioneService.getCurrentUser().subscribe(res => {
       console.log("Authenticated");
       this.appcomponent.isUserLoggedIn = true;
-      this.router.navigate(['/company']);
+      this.router.navigate(['/dashboard']);
       
     },
     err => {
@@ -89,7 +89,7 @@ export class LoginComponent {
 
         console.log(localStorage.getItem('userToken'));
         this.appcomponent.isUserLoggedIn = true;
-        this.router.navigate(['/company']);
+        this.router.navigate(['/dashboard']);
         
       }
 

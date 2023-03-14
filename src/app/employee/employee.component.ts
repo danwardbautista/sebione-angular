@@ -51,6 +51,7 @@ export class EmployeeComponent {
   deleteRowID:any;
   deleteFirstName:any;
   deleteLastName:any;
+  tableLoaded:boolean=false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -117,6 +118,7 @@ export class EmployeeComponent {
 
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.tableLoaded = true;
     });
   }
 
