@@ -1,0 +1,38 @@
+.info-box-class {
+    font-size: 17px;
+}
+
+.icon-color {
+    color: white;
+}
+
+.welcome-card {
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 25px 15px 25px 15px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 400;
+    color:white;
+}
+
+.bg {
+    background: linear-gradient(-45deg, #0b5575, #0b2b75, #0d0b75, #400b75);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
