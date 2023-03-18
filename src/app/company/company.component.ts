@@ -113,6 +113,7 @@ export class CompanyComponent implements AfterViewInit {
     this.formValuesCompany.reset();
     this.showAdd = true;
     this.showEdit = false;
+    this.selectedFileImage = null;
   }
 
   clickEditCompany(element: any) {
@@ -124,6 +125,7 @@ export class CompanyComponent implements AfterViewInit {
     this.formValuesCompany.controls['email'].setValue(element.email);
     this.uploadedImage = element.logo;
     this.formValuesCompany.controls['website'].setValue(element.website);
+    this.selectedFileImage = null;
   }
 
   clickDeleteCompany(element: any) {
